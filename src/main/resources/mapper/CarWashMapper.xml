@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.cws.mapper.CarWashMapper">
+
+  <insert id="insertCafeWash" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO car_wash (user_id, title, address, thumbnail)
+    VALUES (#{userId}, #{title}, #{address}, #{thumbnail})
+  </insert>
+
+</mapper>
