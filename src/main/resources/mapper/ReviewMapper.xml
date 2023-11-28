@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.cws.mapper.ReviewMapper">
+
+  <select id="selectReviewsByCarWashId" resultType="kr.cws.model.dto.response.ReviewRes">
+    SELECT
+      reviews.id, users.name AS userName, reviews.description, reviews.score,
+      reviews.created_at AS createdAt
+    FROM reviews
+           JOIN users
+                ON reviews.user_id = users.id
+    WHERE car_wash_id = #{carWashId}
+    ORDER BY reviews.created_at DESC
+  </select>
+
+  <insert id="insertReview">
+    INSERT INTO reviews (user_id, car_wash_id, description, score)
+    VALUES (#{userId}, #{carWashId}, #{description}, #{score})
+  </insert>
+
+  <update id="updateReview">
+    UPDATE reviews
+    <set>
+      <if test="description != null">description = #{description} </if>
+      <if test="score != null">score = #{score}</if>
+    </set>
+    WHERE id = #{id} AND user_id = #{userId}
+  </update>
+
+  <delete id="deleteReview">
+    DELETE FROM reviews
+    WHERE id = #{reviewId} AND user_id = #{userId}
+  </delete>
+
+</mapper>

@@ -39,7 +39,7 @@ public class CarWashService {
             .thumbnail(carWashReq.getThumbnail())
             .build();
 
-        carWashMapper.insertCafeWash(carWash);
+        carWashMapper.insertCarWash(carWash);
 
         List<Zone> zones = new ArrayList<>();
         for (ZoneReq zoneReq : carWashReq.getZones()) {

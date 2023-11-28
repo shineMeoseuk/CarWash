@@ -2,6 +2,7 @@ package kr.cws.mapper;
 
 import kr.cws.model.domain.CarWash;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * CafeWash Mapper.
@@ -11,5 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CarWashMapper {
 
-    void insertCafeWash(CarWash carWash);
+    void insertCarWash(CarWash carWash);
+
+    boolean isBlockUser(@Param("userId") Long userId, @Param("carWashId") Long carWashId);
 }

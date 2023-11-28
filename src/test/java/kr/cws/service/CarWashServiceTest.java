@@ -54,7 +54,7 @@ class CarWashServiceTest {
             .build();
 
         carWashService.registerCarWash(1L, carWashReq);
-        verify(carWashMapper).insertCafeWash(any(CarWash.class));
+        verify(carWashMapper).insertCarWash(any(CarWash.class));
         verify(zoneMapper).insertZones(any());
         verify(zoneMapper).insertZones(any());
 
