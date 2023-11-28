@@ -56,6 +56,34 @@ public class CarWashController {
     }
 
     /**
+     * 북 마크 등록하기.
+     *
+     * @since 1.0.0
+     */
+    @PostMapping("/{carWashId}/bookmarks")
+    @LoginCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerBookmark(@CurrentUserId Long userId,
+        @PathVariable("carWashId") Long carWashId) {
+        carWashService.registerBookmark(userId, carWashId);
+    }
+
+    /**
+     * 북 마크 취소하기.
+     *
+     * @since 1.0.0
+     */
+    @DeleteMapping("/{carWashId}/bookmarks")
+    @LoginCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelBookmark(@CurrentUserId Long userId,
+        @PathVariable("carWashId") Long carWashId) {
+        carWashService.cancelBookmark(userId, carWashId);
+    }
+
+    /**
      * 예약하기.
      *
      * @since 1.0.0

@@ -2,6 +2,8 @@ package kr.cws.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import kr.cws.exception.DuplicatedException;
+import kr.cws.exception.NotFoundException;
 import kr.cws.mapper.CarWashMapper;
 import kr.cws.mapper.ZoneMapper;
 import kr.cws.model.domain.CarWash;
@@ -52,5 +54,33 @@ public class CarWashService {
         }
 
         zoneMapper.insertZones(zones);
+    }
+    /**
+     * 북 마크 등록하기.
+     *
+     * @param userId    유저 ID
+     * @param carWashId 세차장 ID
+     * @since 1.0.0
+     */
+    public void registerBookmark(Long userId, Long carWashId) {
+        if (carWashMapper.isExistsBookmark(userId, carWashId)) {
+            throw new DuplicatedException("Bookmark is already set.");
+        }
+
+        carWashMapper.insertBookmark(userId, carWashId);
+    }
+
+    /**
+     * 북 마크 취소하기.
+     *
+     * @param userId    유저 ID
+     * @param carWashId 세차장 ID
+     * @since 1.0.0
+     */
+    public void cancelBookmark(Long userId, Long carWashId) {
+        int deleteCount = carWashMapper.deleteBookmark(userId, carWashId);
+        if (deleteCount == 0) {
+            throw new NotFoundException("This bookmark is not exists");
+        }
     }
 }
