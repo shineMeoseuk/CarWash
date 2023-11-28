@@ -1,10 +1,14 @@
 package kr.cws.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import kr.cws.exception.DuplicatedException;
+import kr.cws.exception.NotFoundException;
 import kr.cws.mapper.CarWashMapper;
 import kr.cws.mapper.ZoneMapper;
 import kr.cws.model.domain.CarWash;
@@ -57,6 +61,34 @@ class CarWashServiceTest {
         verify(carWashMapper).insertCarWash(any(CarWash.class));
         verify(zoneMapper).insertZones(any());
         verify(zoneMapper).insertZones(any());
+    }
 
+    @Test
+    @DisplayName("북마크 등록에 성공합니다.")
+    public void registerBookmarkTestWhenSuccess() {
+        carWashService.registerBookmark(1L, 1L);
+        verify(carWashMapper).insertBookmark(1L, 1L);
+    }
+
+    @Test
+    @DisplayName("북마크 등록에 실패합니다. :이미 등록된 북마크")
+    public void registerBookmarkTestWhenFail() {
+        when(carWashMapper.isExistsBookmark(1L, 1L)).thenReturn(true);
+        assertThrows(DuplicatedException.class, () -> carWashService.registerBookmark(1L, 1L));
+    }
+
+    @Test
+    @DisplayName("북마크 취소에 성공합니다.")
+    public void cancelBookmarkTestWhenSuccess() {
+        when(carWashMapper.deleteBookmark(1L, 1L)).thenReturn(1);
+        carWashService.cancelBookmark(1L, 1L);
+        verify(carWashMapper).deleteBookmark(1L, 1L);
+    }
+
+    @Test
+    @DisplayName("북마크 취소에 실패합니다. :등록하지 않은 북마크")
+    public void cancelBookmarkTestWhenFail() {
+        when(carWashMapper.deleteBookmark(1L, 1L)).thenReturn(0);
+        assertThrows(NotFoundException.class, () -> carWashService.cancelBookmark(1L, 1L));
     }
 }

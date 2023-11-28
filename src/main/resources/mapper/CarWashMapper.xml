@@ -10,4 +10,22 @@
     VALUES (#{userId}, #{title}, #{address}, #{thumbnail})
   </insert>
 
+  <insert id="insertBookmark" parameterType="long">
+    INSERT INTO bookmarks (user_id, car_wash_id)
+    VALUES (#{userId}, #{carWashId})
+  </insert>
+
+  <delete id="deleteBookmark" parameterType="long">
+    DELETE FROM bookmarks
+    WHERE user_id = #{userId} AND car_wash_id = #{carWashId}
+  </delete>
+
+  <select id="isBlockUser" resultType="boolean" parameterType="long">
+    SELECT EXISTS
+    (
+      SELECT id FROM blacklist
+      WHERE user_id = #{userId} AND car_wash_id = #{carWashId}
+    )
+  </select>
+
 </mapper>
