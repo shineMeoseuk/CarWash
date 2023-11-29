@@ -97,6 +97,20 @@ public class CarWashController {
     }
 
     /**
+     * 예약 취소하기
+     *
+     * @since 1.0.0
+     */
+    @DeleteMapping("/{carWashId}/zones/{zoneId}/reservations/{reservationId}")
+    @LoginCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelReservation(@CurrentUserId Long userId,
+        @PathVariable("reservationId") Long reservationId) {
+        reservationService.cancelReservation(userId, reservationId);
+    }
+
+    /**
      * 리뷰 목록 조회하기.
      *
      * @since 1.0.0
@@ -105,8 +119,8 @@ public class CarWashController {
     @LoginCheck
     @BlackCheck
     @ResponseStatus(HttpStatus.OK)
-    public PageInfo<ReviewRes> getReviews(@CurrentUserId Long userId,
-        @PathVariable("carWashId") Long carWashId, @RequestParam("page") Integer page,
+    public PageInfo<ReviewRes> getReviews(@PathVariable("carWashId") Long carWashId,
+        @RequestParam("page") Integer page,
         @RequestParam("size") Integer size) {
         PageHelper.startPage(page, size);
         return PageInfo.of(reviewService.getReviews(carWashId));
