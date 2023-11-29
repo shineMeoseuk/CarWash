@@ -10,4 +10,26 @@
     VALUES (#{userId}, #{zoneId}, #{startTime}, #{endTime})
   </insert>
 
+  <select id="isExistsReservationByZoneIdAndUseTime" resultType="boolean">
+    SELECT EXISTS
+    ( SELECT id
+      FROM reservations
+      WHERE zone_id = #{zoneId}
+        AND start_time &lt;= #{endTime}
+        AND #{startTime} &lt;= end_time
+    FOR UPDATE
+    )
+  </select>
+
+  <select id="selectReservationByIdAndUserId" resultType="kr.cws.model.domain.Reservation">
+    SELECT *
+    FROM reservations
+    WHERE id = #{reservationId} AND user_id = #{userId}
+  </select>
+
+  <delete id="deleteReservation">
+    DELETE FROM reservations
+    WHERE id = #{reservationId}
+  </delete>
+
 </mapper>
