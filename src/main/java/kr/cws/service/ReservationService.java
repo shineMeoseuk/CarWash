@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import kr.cws.annotation.LoginCheck;
+import kr.cws.exception.DuplicatedException;
 import kr.cws.exception.NotFoundException;
 import kr.cws.mapper.ReservationMapper;
 import kr.cws.model.domain.Reservation;
@@ -34,6 +35,10 @@ public class ReservationService {
         if (startTime.isBefore(LocalDateTime.now()) || startTime.isAfter(endTime)
             || ChronoUnit.MINUTES.between(startTime, endTime) < 10) {
             throw new IllegalArgumentException("Please check your reservation time again.");
+        }
+
+        if (reservationMapper.isExistsReservationByZoneIdAndUseTime(zoneId, startTime, endTime)) {
+            throw new DuplicatedException("This Reservation Time already exists.");
         }
 
         Reservation reservation = Reservation.builder()
