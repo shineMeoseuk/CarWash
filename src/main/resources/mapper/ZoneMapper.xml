@@ -16,4 +16,9 @@
     </foreach>
   </insert>
 
+  <delete id="deleteZone">
+    DELETE FROM zones
+    WHERE id = #{id}
+  </delete>
+
 </mapper>

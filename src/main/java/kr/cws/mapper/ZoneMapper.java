@@ -13,4 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ZoneMapper {
 
     void insertZones(List<Zone> zones);
+
+    void deleteZone(Long zoneId);
 }

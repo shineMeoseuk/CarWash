@@ -5,6 +5,16 @@
 
 <mapper namespace="kr.cws.mapper.ReservationMapper">
 
+  <select id="isExistsNowReservationByZoneId" resultType="boolean">
+    SELECT EXISTS
+    ( SELECT id
+      FROM reservations
+      WHERE zone_id = #{zoneId}
+        AND now() &lt;= end_time
+      FOR UPDATE
+    )
+  </select>
+
   <insert id="insertReservation">
     INSERT INTO reservations (user_id, zone_id, start_time, end_time)
     VALUES (#{userId}, #{zoneId}, #{startTime}, #{endTime})
