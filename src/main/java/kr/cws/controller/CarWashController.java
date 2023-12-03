@@ -10,6 +10,7 @@ import kr.cws.annotation.OwnerCheck;
 import kr.cws.model.dto.request.CarWashReq;
 import kr.cws.model.dto.request.ReservationReq;
 import kr.cws.model.dto.request.ReviewReq;
+import kr.cws.model.dto.request.ZoneReq;
 import kr.cws.model.dto.response.ReviewRes;
 import kr.cws.service.CarWashService;
 import kr.cws.service.ReservationService;
@@ -84,6 +85,43 @@ public class CarWashController {
     public void cancelBookmark(@CurrentUserId Long userId,
         @PathVariable("carWashId") Long carWashId) {
         carWashService.cancelBookmark(userId, carWashId);
+    }
+
+    /**
+     * 자리 추가하기.
+     *
+     * @param userId    유저 ID - @BlackCheck 용도
+     * @param carWashId 세차장 ID
+     * @param zoneReq   Zone DTO
+     * @since 1.0.0
+     */
+    @PostMapping("/{carWashId}/zones")
+    @LoginCheck
+    @OwnerCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createZone(@CurrentUserId Long userId, @PathVariable("carWashId") Long carWashId,
+        @RequestBody ZoneReq zoneReq) {
+        zoneService.createZone(zoneReq, carWashId);
+    }
+
+    /**
+     * 자리 수정하기
+     *
+     * @param userId
+     * @param carWashId
+     * @param zoneId
+     * @param zoneReq
+     * @since 1.0.0
+     */
+    @PutMapping("/{carWashId}/zones/{zoneId")
+    @LoginCheck
+    @OwnerCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.OK)
+    public void updateZone(@CurrentUserId Long userId, @PathVariable("carWashId") Long carWashId,
+        @PathVariable("zoneId") Long zoneId, @RequestBody ZoneReq zoneReq) {
+        zoneService.updateZone(zoneReq, zoneId, carWashId);
     }
 
     /**

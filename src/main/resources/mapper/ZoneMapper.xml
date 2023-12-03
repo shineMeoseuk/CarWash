@@ -5,6 +5,16 @@
 
 <mapper namespace="kr.cws.mapper.ZoneMapper">
 
+  <select id="isExistsZoneNumber" resultType="boolean">
+    SELECT EXISTS
+    (
+      SELECT id
+      FROM zones
+      WHERE car_wash_id = #{carWashId} AND
+      number = #{zoneNumber}
+    )
+  </select>
+
   <insert id="insertZones" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO zones (car_wash_id, number)
     VALUES
@@ -15,6 +25,19 @@
       )
     </foreach>
   </insert>
+
+  <insert id="insertZone" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO zones (car_wash_id, number)
+    VALUES (#{carWashId}, #{number})
+  </insert>
+
+  <update id="updateZone">
+    UPDATE zones
+    <set>
+      <if test="number != null">number = #{number}</if>
+    </set>
+    WHERE id = #{id}
+  </update>
 
   <delete id="deleteZone">
     DELETE FROM zones

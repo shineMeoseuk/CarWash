@@ -5,6 +5,16 @@
 
 <mapper namespace="kr.cws.mapper.CarWashMapper">
 
+  <select id="isExistsBookmark" resultType="boolean">
+    SELECT EXISTS
+    (
+      SELECT id
+      FROM bookmarks
+      WHERE user_id = #{userId} AND
+      car_wash_id = #{carWashId}
+    )
+  </select>
+
   <insert id="insertCafeWash" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO car_washes (user_id, title, address, thumbnail)
     VALUES (#{userId}, #{title}, #{address}, #{thumbnail})

@@ -1,6 +1,8 @@
 package kr.cws.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,6 +10,7 @@ import static org.mockito.Mockito.when;
 import kr.cws.exception.DuplicatedException;
 import kr.cws.mapper.ReservationMapper;
 import kr.cws.mapper.ZoneMapper;
+import kr.cws.model.domain.Zone;
 import kr.cws.model.dto.request.ZoneReq;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +39,36 @@ class ZoneServiceTest {
         zoneReq = ZoneReq.builder()
             .number(1)
             .build();
+    }
+
+    @Test
+    @DisplayName("자리 생성에 성공합니다.")
+    public void createZoneTestWhenSuccess() {
+        when(zoneMapper.isExistsZoneNumber(1, 1L)).thenReturn(false);
+        zoneService.createZone(zoneReq, 1L);
+        verify(zoneMapper).insertZone(any(Zone.class));
+    }
+
+    @Test
+    @DisplayName("자리 생성에 실패합니다. :중복된 번호.")
+    public void createZoneTestWhenFail() {
+        when(zoneMapper.isExistsZoneNumber(1, 1L)).thenReturn(true);
+        assertThrows(DuplicatedException.class, () -> zoneService.createZone(zoneReq, 1L));
+    }
+
+    @Test
+    @DisplayName("자리 수정에 성공합니다.")
+    public void updateZoneTestWhenSuccess() {
+        when(zoneMapper.isExistsZoneNumber(anyInt(), anyLong())).thenReturn(false);
+        zoneService.updateZone(zoneReq, 1L, 1L);
+        verify(zoneMapper).updateZone(any(Zone.class));
+    }
+
+    @Test
+    @DisplayName("자리 생성에 실패합니다. :중복된 자리 번호")
+    public void updateZoneTestWhenFail() {
+        when(zoneMapper.isExistsZoneNumber(anyInt(), anyLong())).thenReturn(true);
+        assertThrows(DuplicatedException.class, () -> zoneService.updateZone(zoneReq, 1L, 1L));
     }
 
     @Test
