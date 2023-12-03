@@ -6,7 +6,7 @@
 <mapper namespace="kr.cws.mapper.CarWashMapper">
 
   <insert id="insertCafeWash" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO car_wash (user_id, title, address, thumbnail)
+    INSERT INTO car_washes (user_id, title, address, thumbnail)
     VALUES (#{userId}, #{title}, #{address}, #{thumbnail})
   </insert>
 
@@ -20,12 +20,23 @@
     WHERE user_id = #{userId} AND car_wash_id = #{carWashId}
   </delete>
 
+  <delete id="deleteZone" parameterType="long">
+    DELETE FROM zones
+    WHERE id = {zoneId}
+  </delete>
+
   <select id="isBlockUser" resultType="boolean" parameterType="long">
     SELECT EXISTS
     (
       SELECT id FROM blacklist
       WHERE user_id = #{userId} AND car_wash_id = #{carWashId}
     )
+  </select>
+
+  <select id="selectCarWashById" resultType="kr.cws.model.domain.CarWash">
+    SELECT *
+    FROM  car_washes
+    WHERE id = #{carWashId}
   </select>
 
 </mapper>

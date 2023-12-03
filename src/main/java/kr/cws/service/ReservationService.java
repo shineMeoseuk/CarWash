@@ -3,12 +3,14 @@ package kr.cws.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import kr.cws.annotation.LoginCheck;
 import kr.cws.exception.NotFoundException;
 import kr.cws.mapper.ReservationMapper;
 import kr.cws.model.domain.Reservation;
 import kr.cws.model.dto.request.ReservationReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @Service
 @RequiredArgsConstructor

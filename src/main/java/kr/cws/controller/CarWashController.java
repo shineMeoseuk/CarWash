@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import kr.cws.annotation.BlackCheck;
 import kr.cws.annotation.CurrentUserId;
 import kr.cws.annotation.LoginCheck;
+import kr.cws.annotation.OwnerCheck;
 import kr.cws.model.dto.request.CarWashReq;
 import kr.cws.model.dto.request.ReservationReq;
 import kr.cws.model.dto.request.ReviewReq;
@@ -13,6 +14,7 @@ import kr.cws.model.dto.response.ReviewRes;
 import kr.cws.service.CarWashService;
 import kr.cws.service.ReservationService;
 import kr.cws.service.ReviewService;
+import kr.cws.service.ZoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarWashController {
 
     private final CarWashService carWashService;
-    private final ReservationService reservationService;
     private final ReviewService reviewService;
+    private final ZoneService zoneService;
+    private final ReservationService reservationService;
 
     /**
      * 세차장 등록하기.
@@ -81,6 +84,24 @@ public class CarWashController {
     public void cancelBookmark(@CurrentUserId Long userId,
         @PathVariable("carWashId") Long carWashId) {
         carWashService.cancelBookmark(userId, carWashId);
+    }
+
+    /**
+     * 자리 삭제하기.
+     *
+     * @param userId    유저 ID - @BlackCheck, @OwnerCheck 용도
+     * @param carWashId 세차장 ID - @BlackCheck, @OwnerCheck 용도
+     * @param zoneId    자리 ID
+     * @since 1.0.0
+     */
+    @DeleteMapping("/{carWashId}/zones/{zoneId}")
+    @LoginCheck
+    @OwnerCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteZone(@CurrentUserId Long userId, @PathVariable("carWashId") Long carWashId,
+        @PathVariable("zoneId") Long zoneId) {
+        zoneService.deleteZone(zoneId);
     }
 
     /**

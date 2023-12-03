@@ -55,6 +55,7 @@ public class CarWashService {
 
         zoneMapper.insertZones(zones);
     }
+
     /**
      * 북 마크 등록하기.
      *
@@ -83,4 +84,6 @@ public class CarWashService {
             throw new NotFoundException("This bookmark is not exists");
         }
     }
+
+
 }
