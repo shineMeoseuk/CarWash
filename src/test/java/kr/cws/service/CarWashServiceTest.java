@@ -2,18 +2,23 @@ package kr.cws.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import kr.cws.exception.DuplicatedException;
 import kr.cws.exception.NotFoundException;
 import kr.cws.mapper.CarWashMapper;
 import kr.cws.mapper.ZoneMapper;
 import kr.cws.model.domain.CarWash;
 import kr.cws.model.dto.request.CarWashReq;
+import kr.cws.model.dto.request.SearchTimeReq;
 import kr.cws.model.dto.request.ZoneReq;
+import kr.cws.model.dto.response.CarWashDetailRes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,6 +66,25 @@ class CarWashServiceTest {
         verify(carWashMapper).insertCarWash(any(CarWash.class));
         verify(zoneMapper).insertZones(any());
         verify(zoneMapper).insertZones(any());
+    }
+
+    @Test
+    @DisplayName("세차장 상세 조회에 성공합니다.")
+    public void getCarWashTestWhenSuccess() {
+        when(carWashMapper.selectCarWashDetailById(anyLong())).thenReturn(
+            Optional.of(new CarWashDetailRes()));
+        when(zoneMapper.selectZoneUseInfo(anyLong(), any(LocalDateTime.class))).thenReturn(any());
+        carWashService.getCarWash(1L, new SearchTimeReq(LocalDateTime.now()));
+        verify(carWashMapper).selectCarWashDetailById(anyLong());
+        verify(zoneMapper).selectZoneUseInfo(anyLong(), any(LocalDateTime.class));
+    }
+
+    @Test
+    @DisplayName("세차장 상세 조회에 실패합니다. :존재하지 않는 세차장")
+    public void getCarWashTestWhenFail() {
+        when(carWashMapper.selectCarWashDetailById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class,
+            () -> carWashService.getCarWash(1L, new SearchTimeReq(LocalDateTime.now())));
     }
 
     @Test

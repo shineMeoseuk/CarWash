@@ -2,6 +2,7 @@ package kr.cws.mapper;
 
 import java.util.Optional;
 import kr.cws.model.domain.CarWash;
+import kr.cws.model.dto.response.CarWashDetailRes;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,6 +23,8 @@ public interface CarWashMapper {
     boolean isBlockUser(@Param("userId") Long userId, @Param("carWashId") Long carWashId);
 
     Optional<CarWash> selectCarWashById(Long carWashId);
+
+    Optional<CarWashDetailRes> selectCarWashDetailById(Long carWashId);
 
     boolean isExistsBookmark(@Param("userId") Long userId, @Param("carWashId") Long carWashId);
 }

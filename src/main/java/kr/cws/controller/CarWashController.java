@@ -2,6 +2,7 @@ package kr.cws.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import java.time.LocalDateTime;
 import javax.validation.Valid;
 import kr.cws.annotation.BlackCheck;
 import kr.cws.annotation.CurrentUserId;
@@ -10,7 +11,9 @@ import kr.cws.annotation.OwnerCheck;
 import kr.cws.model.dto.request.CarWashReq;
 import kr.cws.model.dto.request.ReservationReq;
 import kr.cws.model.dto.request.ReviewReq;
+import kr.cws.model.dto.request.SearchTimeReq;
 import kr.cws.model.dto.request.ZoneReq;
+import kr.cws.model.dto.response.CarWashDetailRes;
 import kr.cws.model.dto.response.ReviewRes;
 import kr.cws.service.CarWashService;
 import kr.cws.service.ReservationService;
@@ -57,6 +60,27 @@ public class CarWashController {
     public void registerCarWash(@CurrentUserId Long userId,
         @Valid @RequestBody CarWashReq carWashReq) {
         carWashService.registerCarWash(userId, carWashReq);
+    }
+
+    /**
+     * 세차장 상세 조회하기.
+     *
+     * @param userId        유저 ID - @BlackCheck 용도
+     * @param carWashId     세차장 ID
+     * @param searchTimeReq 검색시간 DTO
+     * @since 1.0.0
+     */
+    @GetMapping("/{carWashId}")
+    @LoginCheck
+    @BlackCheck
+    @ResponseStatus(HttpStatus.OK)
+    public CarWashDetailRes getCarWash(@CurrentUserId Long userId,
+        @PathVariable("carWashId") Long carWashId,
+        @RequestBody(required = false) SearchTimeReq searchTimeReq) {
+        if (searchTimeReq == null) {
+            searchTimeReq = new SearchTimeReq(LocalDateTime.now());
+        }
+        return carWashService.getCarWash(carWashId, searchTimeReq);
     }
 
     /**

@@ -44,4 +44,18 @@
     WHERE id = #{id}
   </delete>
 
+  <select id="selectZoneUseInfo" resultType="kr.cws.model.dto.response.ZoneUseInfoRes">
+    SELECT id, number,
+      ( SELECT EXISTS
+        (
+          SELECT id FROM reservations
+          WHERE zone_id = zones.id
+          AND start_time &lt;= #{searchTime}
+          AND #{searchTime} &lt;= end_time
+        )
+      ) AS currentUse
+    FROM zones
+    WHERE car_wash_id = #{carWashId}
+  </select>
+
 </mapper>
