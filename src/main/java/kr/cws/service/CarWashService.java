@@ -9,9 +9,13 @@ import kr.cws.mapper.ZoneMapper;
 import kr.cws.model.domain.CarWash;
 import kr.cws.model.domain.Zone;
 import kr.cws.model.dto.request.CarWashReq;
+import kr.cws.model.dto.request.SearchTimeReq;
 import kr.cws.model.dto.request.ZoneReq;
+import kr.cws.model.dto.response.CarWashDetailRes;
+import kr.cws.model.dto.response.ZoneUseInfoRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * CarWash Service.
@@ -54,6 +58,25 @@ public class CarWashService {
         }
 
         zoneMapper.insertZones(zones);
+    }
+
+    /**
+     * 세차장 디테일 조회.
+     *
+     * @param carWashId     세차장 ID
+     * @param searchTimeReq 검색 시간 DTO
+     * @since 1.0.0
+     */
+    @Transactional(readOnly = true)
+    public CarWashDetailRes getCarWash(Long carWashId, SearchTimeReq searchTimeReq) {
+        CarWashDetailRes carWashRes = carWashMapper.selectCarWashDetailById(carWashId)
+            .orElseThrow(() -> new NotFoundException("select not found carwash."));
+
+        List<ZoneUseInfoRes> zones = zoneMapper.selectZoneUseInfo(carWashId,
+            searchTimeReq.getSearchTime());
+
+        carWashRes.setZones(zones);
+        return carWashRes;
     }
 
     /**
