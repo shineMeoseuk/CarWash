@@ -22,7 +22,7 @@ public class User {
     private String password;
     private String name;
     private String address;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

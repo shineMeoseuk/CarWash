@@ -5,12 +5,16 @@ import kr.cws.annotation.CurrentUserId;
 import kr.cws.annotation.LoginCheck;
 import kr.cws.model.dto.request.LoginReq;
 import kr.cws.model.dto.request.SignUpReq;
+import kr.cws.model.dto.request.UserUpdateReq;
+import kr.cws.model.dto.response.UserInfoRes;
 import kr.cws.service.LoginService;
 import kr.cws.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -44,13 +48,37 @@ public class UserController {
     /**
      * 로그인
      *
-     * @param loginReq 로그인 입력 정보
+     * @param loginReq  로그인 입력 정보
      * @since 1.0.0
      */
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public void login(@Valid @RequestBody LoginReq loginReq) {
         loginService.login(loginReq);
+    }
+
+    /**
+     * 회원 정보 조회.
+     * @param userId    유저 ID.
+     * @since 1.0.0
+     */
+    @GetMapping
+    @LoginCheck
+    @ResponseStatus(HttpStatus.OK)
+    public UserInfoRes getUserInfo(@CurrentUserId Long userId) {
+        return userService.getUserInfo(userId);
+    }
+
+    /**
+     * 회원 정보 수정.
+     * @param userId    유저 ID.
+     * @since 1.0.0
+     */
+    @PutMapping
+    @LoginCheck
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUserInfo(@CurrentUserId Long userId, @RequestBody UserUpdateReq userReq) {
+        userService.updateUserInfo(userId, userReq);
     }
 
     /**
@@ -68,7 +96,7 @@ public class UserController {
     /**
      * 회원 탈퇴
      *
-     * @param userId 유저 ID.
+     * @param userId    유저 ID.
      * @since 1.0.0
      */
     @DeleteMapping
@@ -77,4 +105,6 @@ public class UserController {
     public void deleteUser(@CurrentUserId Long userId) {
         userService.deleteUser(userId);
     }
+
+
 }
