@@ -16,6 +16,6 @@ public class Zone {
     private Long id;
     private Long carWashId;
     private Integer number;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

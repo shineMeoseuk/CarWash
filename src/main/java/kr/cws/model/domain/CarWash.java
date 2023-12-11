@@ -18,7 +18,7 @@ public class CarWash {
     private String title;
     private String address;
     private String thumbnail;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private List<Zone> zones;
 }

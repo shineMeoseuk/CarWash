@@ -21,6 +21,22 @@
     WHERE email = #{email}
   </select>
 
+  <select id="selectUserById" resultType="kr.cws.model.dto.response.UserInfoRes">
+    SELECT email, name, address
+    FROM users WHERE id = #{userId}
+  </select>
+
+  <update id="updateUserById">
+    UPDATE users
+
+    <set>
+      <if test="user.name != null">name = #{user.name}</if>
+      <if test="user.address != null">address = #{user.address}</if>
+      updated_at = NOW()
+    </set>
+    WHERE id = #{user.id}
+  </update>
+
   <delete id="deleteUser">
     DELETE
     FROM users
