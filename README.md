@@ -15,7 +15,7 @@
 
 ## Issue
 - #1 Swagger 를 사용하여 API 문서 자동화 하기.
-- #2 분산 환경에서 발생하는 세션 불일치 문제 해결하기.
+- [#2 분산 환경에서 발생하는 세션 불일치 문제 해결하기.](https://velog.io/@white0597/%EB%B6%84%EC%82%B0-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EB%B0%9C%EC%83%9D%ED%95%98%EB%8A%94-%EC%84%B8%EC%85%98-%EB%B6%88%EC%9D%BC%EC%B9%98%ED%95%98%EB%8A%94-%EC%9D%B4%EC%8A%88-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)
 - #3 Jenkins를 통한 CI & CD 구축하기.
 
 ## 프로젝트 관리
