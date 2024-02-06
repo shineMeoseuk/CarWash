@@ -138,7 +138,7 @@ public class CarWashController {
      * @param zoneReq
      * @since 1.0.0
      */
-    @PutMapping("/{carWashId}/zones/{zoneId")
+    @PutMapping("/{carWashId}/zones/{zoneId}")
     @LoginCheck
     @OwnerCheck
     @BlackCheck
