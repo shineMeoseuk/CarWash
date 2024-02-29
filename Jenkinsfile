@@ -4,8 +4,11 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-              checkout scm
-              echo 'Git Checkout Success!'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false,
+                          extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true,
+                                        recursiveSubmodules: true, reference: '', trackingSubmodules: true]],
+                          submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github_access_token', url: 'https://github.com/shineMeoseuk/secure-submodule.git']]])
+                echo 'Git Checkout Success!'
             }
         }
 
