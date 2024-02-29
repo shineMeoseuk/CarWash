@@ -68,3 +68,33 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+processResources {
+	duplicatesStrategy = 'INCLUDE' // 중복 파일을 포함하도록 설정
+}
+
+processResources.dependsOn('copySecretMain')
+
+tasks.register('copySecretMain', Copy) {
+	from './secure-submodule' // 서브모듈 디렉토리 경로
+	include "application*.yml"  // 복사할 파일들
+	into 'src/main/resources'  // main 소스 세트에 복사 위치
+}
+
+processTestResources.dependsOn('copySecretTest')
+
+tasks.register('copySecretTest', Copy) {
+	from './secure-submodule' // 서브모듈 디렉토리 경로
+	include "application*.yml"  // 복사할 파일들
+	into 'src/test/resources'  // test 소스 세트에 복사 위치
+}
+
+
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs "src/main/resources"
+//			include "**/*"
+//		}
+//	}
+//}
