@@ -12,14 +12,14 @@ pipeline {
         stage('Test') {
             steps {
                 sh './gradlew test'
-                echo 'test success'
+                echo 'test success!'
             }
         }
 
         stage('Build') {
             steps {
                 sh './gradlew clean build'
-                echo 'build success'
+                echo 'build success!'
             }
         }
 
