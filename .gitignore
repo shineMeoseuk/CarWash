@@ -39,5 +39,3 @@ nb-configuration.xml
 # OS X
 .DS_Store
 
-# 추가
-application.yml
