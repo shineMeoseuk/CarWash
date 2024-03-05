@@ -9,6 +9,20 @@ pipeline {
             }
         }
 
+	stage('Copy Secret Main') {
+            steps {
+                // main 소스 세트에 .yml 파일 복사 단계
+                sh 'cp ./secure-submodule/application*.yml src/main/resources/'
+            }
+        }
+
+        stage('Copy Secret Test') {
+            steps {
+                // test 소스 세트에 .yml 파일 복사 단계
+                sh 'cp ./secure-submodule/application*.yml src/test/resources/'
+            }
+        }
+
         stage('Test') {
             steps {
                 sh './gradlew test'
