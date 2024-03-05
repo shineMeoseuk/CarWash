@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-              checkout scm
+              checkout scmGit(branches: [[name: '*/main']], extensions: [submodule(parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: true)], userRemoteConfigs: [[credentialsId: 'shineMeoseuk', url: 'https://github.com/shineMeoseuk/CarWash']])
               echo 'Git Checkout Success!'
             }
         }
