@@ -57,4 +57,5 @@ InteliJ Google Style 적용 방법
   
 ## ERD
 <a>https://github.com/shineMeoseuk/CarWash/wiki/ERD
-![CarWash (1)](https://github.com/shineMeoseuk/CarWash/assets/112597600/a0663432-b3ee-4bc8-bdbe-18b04d20a97a)
+![db](https://github.com/shineMeoseuk/CarWash/assets/112597600/029a54cc-b1d2-438b-9f86-430e335010d9)
+
