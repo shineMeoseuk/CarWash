@@ -1,3 +1,6 @@
+
+![PRO](https://github.com/shineMeoseuk/CarWash/assets/112597600/dfa71d70-9284-4f30-9700-c0fd10e265a6)
+
 ## 🚗 CarWash
 - 셀프 세차 예약 서비스인 CarWash 입니다.
 - 대규모 트래픽을 처리할 수 있는 서비스를 목표로 진행하였습니다.
@@ -31,7 +34,8 @@ InteliJ Google Style 적용 방법
 4. 적용 후 Tab size 와 Indent 를 4로 변경
 
 ## Git-Flow branch 전략
-![branch](https://github.com/shineMeoseuk/CarWash/assets/112597600/ece324e7-736a-473a-b85c-bb0294cbe9d3)
+![branch](https://github.com/shineMeoseuk/CarWash/assets/112597600/4fe45351-5ac0-47b5-92e7-fa3848c699a7)
+
 
 ✅ Master : 제품으로 출시될 수 있는 branch <br>
 ✅ Hotfix : 출시 버전에서 발생한 버그를 수정하는 branch <br>
